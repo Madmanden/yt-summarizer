@@ -16,7 +16,7 @@ A CLI tool that downloads YouTube video transcripts and generates summaries usin
 
 1. Clone this repository:
    ```
-   git clone https://github.com/yourusername/yt-summarizer.git
+   git clone https://github.com/madmanden/yt-summarizer.git
    cd yt-summarizer
    ```
 
@@ -40,7 +40,7 @@ cp .env.example .env
 Then edit the `.env` file to add your API key:
 ```
 OPENROUTER_API_KEY=your_key_here
-OPENROUTER_MODEL=claude-3-haiku-20240307
+OPENROUTER_MODEL=openai/gpt-4o-mini
 ```
 
 ## Usage
@@ -64,7 +64,7 @@ yt-summarize [VIDEO_URL_OR_ID] [OPTIONS]
 
 ```bash
 # Summarize a video using the default model
-yt-summarize https://www.youtube.com/watch?v=dQw4w9WgXcQ
+yt-summarize "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
 # Specify an output directory
 yt-summarize dQw4w9WgXcQ -o my-summaries/

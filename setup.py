@@ -6,12 +6,12 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name="yt-summarizer",
     version="0.1.0",
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="Chrisitian Holm Christensen",
+    author_email="chr100@gmail.com",
     description="A tool to summarize YouTube videos using AI",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/yt-summarizer",
+    url="https://github.com/madmanden/yt-summarizer",
     packages=find_packages(),
     include_package_data=True,
     classifiers=[
