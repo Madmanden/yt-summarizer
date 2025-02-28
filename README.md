@@ -87,17 +87,17 @@ yt-summarize https://youtu.be/dQw4w9WgXcQ --fix-product-names
 
 ## Supported Models
 
-You can use any model available on OpenRouter. Some recommendations:
+You can use any model available on OpenRouter. Some examples:
 
 - `openai/gpt-4o-mini` (default)
-- `anthropic/claude-3.5-haiku` (fast)
-- `anthropic/claude-3.5-sonnet` (balanced)
-- `deepseek/deepseek-chat` (versatile, economical)
+- `anthropic/claude-3.5-sonnet` (expensive)
+- `deepseek/deepseek-chat` (economical)
 - `deepseek/deepseek-r1` (reasoning-focused)
 - `deepseek/deepseek-chat:free` (free)
 - `google/gemini-2.0-flash-001` (quick)
 - `google/gemini-2.0-flash-lite-001` (quick, economical)
 
+Some models work better than others. If in doubt, just use the default.
 
 ## Features
 
