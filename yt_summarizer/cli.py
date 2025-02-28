@@ -71,28 +71,31 @@ def main():
             TextColumn("[progress.description]{task.description}"),
             console=console
         ) as progress:
+            # Create a single task with 4 steps
+            task = progress.add_task("[cyan]Processing...", total=4)
+            
             # Step 1: Get video information
-            task = progress.add_task("[cyan]Fetching video information...", total=None)
+            progress.update(task, description="[cyan]Fetching video information...")
             video_info = get_video_info(video_id)
-            progress.update(task, completed=True)
+            progress.update(task, advance=1)
             
             # Step 2: Download transcript
-            task = progress.add_task("[cyan]Downloading transcript...", total=None)
+            progress.update(task, description="[cyan]Downloading transcript...")
             transcript_data = get_transcript(video_id)
             transcript_text = format_transcript(transcript_data)
-            progress.update(task, completed=True)
+            progress.update(task, advance=1)
             
             # Step 3: Generate summary
-            task = progress.add_task("[cyan]Generating summary...", total=None)
+            progress.update(task, description="[cyan]Generating summary...")
             summary = generate_summary(transcript_text, video_info, model, api_key, args.fix_product_names)
-            progress.update(task, completed=True)
+            progress.update(task, advance=1)
             
             # Step 4: Save summary
-            task = progress.add_task("[cyan]Saving summary...", total=None)
+            progress.update(task, description="[cyan]Saving summary...")
             output_path = save_summary(summary, video_info, video_id, output_dir, args.print, model)
-            progress.update(task, completed=True)
+            progress.update(task, advance=1)
         
-        console.print(f"[bold green]Summary saved to:[/bold green] {output_path}")
+        # Summary saved message is already printed in save_summary function
         
     except Exception as e:
         # Make the error message stand out
