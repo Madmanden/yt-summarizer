@@ -77,7 +77,7 @@ def format_transcript(transcript_data):
     """Format transcript data into a single text string"""
     return " ".join([item['text'] for item in transcript_data])
 
-def generate_summary(transcript_text, video_info, model, api_key):
+def generate_summary(transcript_text, video_info, model, api_key, fix_products=True):
     """Generate a summary using OpenRouter API"""
     if not api_key:
         raise Exception("OpenRouter API key not found. Please set it in the .env file.")
@@ -141,13 +141,65 @@ TRANSCRIPT:
         
         result = response.json()
         if 'choices' in result and len(result['choices']) > 0:
-            return result['choices'][0]['message']['content']
+            initial_summary = result['choices'][0]['message']['content']
+            # Second pass to fix product names if enabled
+            if fix_products:
+                return fix_product_names(initial_summary, video_info, model, api_key, headers)
+            else:
+                return initial_summary
         else:
             raise Exception("Unexpected API response format")
     except requests.exceptions.RequestException as e:
         raise Exception(f"Request error: {str(e)}")
     except Exception as e:
         raise Exception(f"Error generating summary: {str(e)}")
+
+def fix_product_names(summary, video_info, model, api_key, headers):
+    """Second pass to fix any incorrect product names in the summary"""
+    
+    prompt = f"""
+You are a product name accuracy reviewer. Review the following summary of a YouTube video and fix any product names that seem incorrect based on the context. 
+
+VIDEO TITLE: {video_info['title']}
+VIDEO AUTHOR: {video_info['author']}
+
+Focus ONLY on correcting product names, brand names, and technical terms that appear to be incorrect or misspelled based on the context. 
+Do not make any other changes to the summary's content, structure, or style.
+
+Return the entire summary with any product name corrections made.
+
+SUMMARY:
+{summary}
+"""
+
+    data = {
+        "model": model,
+        "messages": [
+            {"role": "user", "content": prompt}
+        ]
+    }
+    
+    try:
+        console.print("[cyan]Running second pass to fix product names...[/cyan]")
+        response = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers=headers,
+            json=data
+        )
+        
+        if response.status_code != 200:
+            console.print("[yellow]Warning: Second pass failed, using initial summary[/yellow]")
+            return summary
+        
+        result = response.json()
+        if 'choices' in result and len(result['choices']) > 0:
+            return result['choices'][0]['message']['content']
+        else:
+            console.print("[yellow]Warning: Unexpected API response in second pass, using initial summary[/yellow]")
+            return summary
+    except Exception as e:
+        console.print(f"[yellow]Warning: Error in second pass: {str(e)}. Using initial summary.[/yellow]")
+        return summary
 
 def sanitize_filename(title):
     """Convert a string to a safe filename"""
