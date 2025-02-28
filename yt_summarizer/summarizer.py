@@ -6,6 +6,7 @@ import os
 import re
 import requests
 from pathlib import Path
+from datetime import datetime
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, TranscriptsDisabled, VideoUnavailable
 from rich.console import Console
 
@@ -164,8 +165,11 @@ def save_summary(summary, video_info, video_id, output_dir=None):
     else:
         base_path = Path.cwd()
     
-    # Create filename from video title or ID
-    filename = f"{sanitize_filename(video_info['title'])}-{video_id}.md"
+    # Get current timestamp
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    
+    # Create filename from video title or ID with timestamp
+    filename = f"{sanitize_filename(video_info['title'])}-{video_id}_{timestamp}.md"
     file_path = base_path / filename
     
     with open(file_path, 'w', encoding='utf-8') as f:
