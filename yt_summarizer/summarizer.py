@@ -208,7 +208,7 @@ def sanitize_filename(title):
     # Limit length and trim spaces
     return safe_title[:100].strip()
 
-def save_summary(summary, video_info, video_id, output_dir=None, print_to_terminal=True):
+def save_summary(summary, video_info, video_id, output_dir=None, print_to_terminal=False):
     """Save the summary as a markdown file and print it to the terminal if requested"""
     # Create output directory if specified
     if output_dir:
