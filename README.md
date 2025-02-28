@@ -9,6 +9,7 @@ A CLI tool that downloads YouTube video transcripts and generates summaries usin
 - Save summaries as Markdown files
 - Support for different OpenRouter models
 - Progress indicators and error handling
+- Optional terminal output of summaries
 
 ## Installation
 
@@ -58,6 +59,8 @@ yt-summarize [VIDEO_URL_OR_ID] [OPTIONS]
 - `-o, --output`: Output directory for the summary file (defaults to "summaries")
 - `-m, --model`: OpenRouter model to use (defaults to value in .env)
 - `-k, --api-key`: OpenRouter API key (can be used instead of .env file)
+- `--no-product-fix`: Disable second pass to fix product names
+- `--print`: Print the summary to the terminal (disabled by default)
 - `-h, --help`: Show help message
 
 ### Examples
@@ -74,6 +77,12 @@ yt-summarize https://youtu.be/dQw4w9WgXcQ -m anthropic/claude-3-opus-20240229
 
 # Provide API key directly
 yt-summarize https://youtu.be/dQw4w9WgXcQ -k your_api_key_here
+
+# Print the summary to the terminal
+yt-summarize https://youtu.be/dQw4w9WgXcQ --print
+
+# Skip the second pass that fixes product names
+yt-summarize https://youtu.be/dQw4w9WgXcQ --no-product-fix
 ```
 
 ## Supported Models
@@ -85,9 +94,15 @@ You can use any model available on OpenRouter. Some recommendations:
 - `anthropic/claude-3-sonnet-20240229` (balanced)
 - `anthropic/claude-3-opus-20240229` (highest quality)
 
+## Features
+
+### Terminal Output
+
+By default, summaries are only saved to files. Use the `--print` flag to also display the summary in the terminal with proper Markdown formatting.
+
 ## Error Handling
 
-The tool handles various errors:
+The tool handles various errors with clear, highlighted messages:
 - Invalid YouTube URLs
 - Videos without transcripts
 - API failures
