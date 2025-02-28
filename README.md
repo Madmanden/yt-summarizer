@@ -60,7 +60,7 @@ yt-summarize [VIDEO_URL_OR_ID] [OPTIONS]
 - `-m, --model`: OpenRouter model to use (defaults to value in .env)
 - `-k, --api-key`: OpenRouter API key (can be used instead of .env file)
 - `-f, --fix-product-names`: Enable second pass to fix product names
-- `--print`: Print the summary to the terminal (disabled by default)
+- `-p, --print`: Print the summary to the terminal (disabled by default)
 - `-h, --help`: Show help message
 
 ### Examples
@@ -79,7 +79,7 @@ yt-summarize https://youtu.be/dQw4w9WgXcQ -m anthropic/claude-3-opus-20240229
 yt-summarize https://youtu.be/dQw4w9WgXcQ -k your_api_key_here
 
 # Print the summary to the terminal
-yt-summarize https://youtu.be/dQw4w9WgXcQ --print
+yt-summarize https://youtu.be/dQw4w9WgXcQ -p
 
 # Enable the second pass that fixes product names
 yt-summarize https://youtu.be/dQw4w9WgXcQ -f

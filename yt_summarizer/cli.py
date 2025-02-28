@@ -33,7 +33,7 @@ def main():
     parser.add_argument("-m", "--model", help="OpenRouter model to use (defaults to value in .env)")
     parser.add_argument("-k", "--api-key", help="OpenRouter API key (defaults to OPENROUTER_API_KEY env var)")
     parser.add_argument("-f", "--fix-product-names", action="store_true", help="Enable second pass to fix product names")
-    parser.add_argument("--print", action="store_true", help="Print the summary to the terminal")
+    parser.add_argument("-p", "--print", action="store_true", help="Print the summary to the terminal")
     
     # Catch the case where no arguments are provided
     if len(sys.argv) == 1:
