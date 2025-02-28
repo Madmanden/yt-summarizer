@@ -44,7 +44,7 @@ def get_video_info(video_id):
             }
         return {'title': f'Video {video_id}', 'author': 'Unknown'}
     except Exception as e:
-        console.print(f"[yellow]Warning: Could not fetch video info: {e}[/yellow]")
+        console.print(f"[bold yellow]WARNING:[/bold yellow] Could not fetch video info: {e}")
         return {'title': f'Video {video_id}', 'author': 'Unknown'}
 
 def get_transcript(video_id):
@@ -188,17 +188,17 @@ SUMMARY:
         )
         
         if response.status_code != 200:
-            console.print("[yellow]Warning: Second pass failed, using initial summary[/yellow]")
+            console.print("[bold yellow]WARNING:[/bold yellow] Second pass failed, using initial summary")
             return summary
         
         result = response.json()
         if 'choices' in result and len(result['choices']) > 0:
             return result['choices'][0]['message']['content']
         else:
-            console.print("[yellow]Warning: Unexpected API response in second pass, using initial summary[/yellow]")
+            console.print("[bold yellow]WARNING:[/bold yellow] Unexpected API response in second pass, using initial summary")
             return summary
     except Exception as e:
-        console.print(f"[yellow]Warning: Error in second pass: {str(e)}. Using initial summary.[/yellow]")
+        console.print(f"[bold yellow]WARNING:[/bold yellow] Error in second pass: {str(e)}. Using initial summary.")
         return summary
 
 def sanitize_filename(title):

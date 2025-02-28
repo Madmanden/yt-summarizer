@@ -34,7 +34,21 @@ def main():
     parser.add_argument("-k", "--api-key", help="OpenRouter API key (defaults to OPENROUTER_API_KEY env var)")
     parser.add_argument("--no-product-fix", action="store_true", help="Disable second pass to fix product names")
     parser.add_argument("--print", action="store_true", help="Print the summary to the terminal")
-    args = parser.parse_args()
+    
+    # Catch the case where no arguments are provided
+    if len(sys.argv) == 1:
+        console.print("\n[bold red]ERROR:[/bold red] [bold white on red]The following arguments are required: url[/bold white on red]\n")
+        parser.print_help()
+        sys.exit(1)
+    
+    try:
+        args = parser.parse_args()
+    except Exception as e:
+        # Make the error message stand out
+        error_msg = str(e)
+        console.print(f"\n[bold red]ERROR:[/bold red] [bold white on red]{error_msg}[/bold white on red]\n")
+        parser.print_help()
+        sys.exit(1)
     
     # Get the model from arguments or environment
     model = args.model or os.getenv('OPENROUTER_MODEL', 'openai/gpt-4o-mini')
@@ -49,7 +63,7 @@ def main():
         # Extract video ID from URL or assume it's already an ID
         video_id = extract_video_id(args.url) or args.url
         if not video_id or len(video_id) != 11:
-            console.print("[bold red]Error: Invalid YouTube URL or video ID[/bold red]")
+            console.print("\n[bold red]ERROR:[/bold red] [bold white on red]Invalid YouTube URL or video ID[/bold white on red]\n")
             sys.exit(1)
         
         with Progress(
@@ -81,7 +95,8 @@ def main():
         console.print(f"[bold green]Summary saved to:[/bold green] {output_path}")
         
     except Exception as e:
-        console.print(f"[bold red]Error:[/bold red] {str(e)}")
+        # Make the error message stand out
+        console.print(f"\n[bold red]ERROR:[/bold red] [bold white on red]{str(e)}[/bold white on red]\n")
         sys.exit(1)
 
 if __name__ == "__main__":
