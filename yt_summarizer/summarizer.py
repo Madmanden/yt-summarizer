@@ -78,7 +78,7 @@ def format_transcript(transcript_data):
     """Format transcript data into a single text string"""
     return " ".join([item['text'] for item in transcript_data])
 
-def generate_summary(transcript_text, video_info, model, api_key, fix_products=True):
+def generate_summary(transcript_text, video_info, model, api_key, fix_products=False):
     """Generate a summary using OpenRouter API"""
     if not api_key:
         raise Exception("OpenRouter API key not found. Please set it in the .env file.")

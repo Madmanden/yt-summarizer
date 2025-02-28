@@ -32,7 +32,7 @@ def main():
     parser.add_argument("-o", "--output", help="Output directory for the summary file")
     parser.add_argument("-m", "--model", help="OpenRouter model to use (defaults to value in .env)")
     parser.add_argument("-k", "--api-key", help="OpenRouter API key (defaults to OPENROUTER_API_KEY env var)")
-    parser.add_argument("--no-product-fix", action="store_true", help="Disable second pass to fix product names")
+    parser.add_argument("--fix-product-names", action="store_true", help="Enable second pass to fix product names")
     parser.add_argument("--print", action="store_true", help="Print the summary to the terminal")
     
     # Catch the case where no arguments are provided
@@ -84,7 +84,7 @@ def main():
             
             # Step 3: Generate summary
             task = progress.add_task("[cyan]Generating summary...", total=None)
-            summary = generate_summary(transcript_text, video_info, model, api_key, not args.no_product_fix)
+            summary = generate_summary(transcript_text, video_info, model, api_key, args.fix_product_names)
             progress.update(task, completed=True)
             
             # Step 4: Save summary
