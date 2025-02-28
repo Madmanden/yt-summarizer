@@ -90,9 +90,14 @@ yt-summarize https://youtu.be/dQw4w9WgXcQ --no-product-fix
 You can use any model available on OpenRouter. Some recommendations:
 
 - `openai/gpt-4o-mini` (default)
-- `anthropic/claude-3-haiku-20240307` (fast, economical)
-- `anthropic/claude-3-sonnet-20240229` (balanced)
-- `anthropic/claude-3-opus-20240229` (highest quality)
+- `anthropic/claude-3.5-haiku` (fast)
+- `anthropic/claude-3.5-sonnet` (balanced)
+- `deepseek/deepseek-chat` (versatile, economical)
+- `deepseek/deepseek-r1` (reasoning-focused)
+- `deepseek/deepseek-chat:free` (free)
+- `google/gemini-2.0-flash-001` (quick)
+- `google/gemini-2.0-flash-lite-001` (quick, economical)
+
 
 ## Features
 
