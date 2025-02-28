@@ -59,7 +59,7 @@ yt-summarize [VIDEO_URL_OR_ID] [OPTIONS]
 - `-o, --output`: Output directory for the summary file (defaults to "summaries")
 - `-m, --model`: OpenRouter model to use (defaults to value in .env)
 - `-k, --api-key`: OpenRouter API key (can be used instead of .env file)
-- `--fix-product-names`: Enable second pass to fix product names
+- `-f, --fix-product-names`: Enable second pass to fix product names
 - `--print`: Print the summary to the terminal (disabled by default)
 - `-h, --help`: Show help message
 
@@ -82,7 +82,7 @@ yt-summarize https://youtu.be/dQw4w9WgXcQ -k your_api_key_here
 yt-summarize https://youtu.be/dQw4w9WgXcQ --print
 
 # Enable the second pass that fixes product names
-yt-summarize https://youtu.be/dQw4w9WgXcQ --fix-product-names
+yt-summarize https://youtu.be/dQw4w9WgXcQ -f
 ```
 
 ## Supported Models
