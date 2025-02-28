@@ -209,8 +209,8 @@ def sanitize_filename(title):
     # Limit length and trim spaces
     return safe_title[:100].strip()
 
-def save_summary(summary, video_info, video_id, output_dir=None):
-    """Save the summary as a markdown file and print it to the terminal"""
+def save_summary(summary, video_info, video_id, output_dir=None, print_to_terminal=True):
+    """Save the summary as a markdown file and print it to the terminal if requested"""
     # Create output directory if specified
     if output_dir:
         Path(output_dir).mkdir(parents=True, exist_ok=True)
@@ -234,17 +234,18 @@ def save_summary(summary, video_info, video_id, output_dir=None):
         f.write("---\n\n")
         f.write(summary)
     
-    # Print the summary to the terminal in a pretty way
-    console.print("\n[bold green]Summary Generated:[/bold green]")
-    console.print(f"[bold cyan]# {video_info['title']}[/bold cyan]")
-    console.print(f"[cyan]Channel:[/cyan] {video_info['author']}")
-    console.print(f"[cyan]Video ID:[/cyan] {video_id}")
-    console.print(f"[cyan]URL:[/cyan] https://www.youtube.com/watch?v={video_id}")
-    console.print("\n[cyan]---[/cyan]\n")
-    
-    # Use Rich's Markdown rendering to display the summary with formatting
-    md = Markdown(summary)
-    console.print(md)
+    # Print the summary to the terminal in a pretty way if requested
+    if print_to_terminal:
+        console.print("\n[bold green]Summary Generated:[/bold green]")
+        console.print(f"[bold cyan]# {video_info['title']}[/bold cyan]")
+        console.print(f"[cyan]Channel:[/cyan] {video_info['author']}")
+        console.print(f"[cyan]Video ID:[/cyan] {video_id}")
+        console.print(f"[cyan]URL:[/cyan] https://www.youtube.com/watch?v={video_id}")
+        console.print("\n[cyan]---[/cyan]\n")
+        
+        # Use Rich's Markdown rendering to display the summary with formatting
+        md = Markdown(summary)
+        console.print(md)
     
     console.print(f"\n[green]Summary saved to:[/green] {file_path}\n")
     

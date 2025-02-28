@@ -33,6 +33,7 @@ def main():
     parser.add_argument("-m", "--model", help="OpenRouter model to use (defaults to value in .env)")
     parser.add_argument("-k", "--api-key", help="OpenRouter API key (defaults to OPENROUTER_API_KEY env var)")
     parser.add_argument("--no-product-fix", action="store_true", help="Disable second pass to fix product names")
+    parser.add_argument("--no-print", action="store_true", help="Don't print the summary to the terminal")
     args = parser.parse_args()
     
     # Get the model from arguments or environment
@@ -74,7 +75,7 @@ def main():
             
             # Step 4: Save summary
             task = progress.add_task("[cyan]Saving summary...", total=None)
-            output_path = save_summary(summary, video_info, video_id, output_dir)
+            output_path = save_summary(summary, video_info, video_id, output_dir, not args.no_print)
             progress.update(task, completed=True)
         
         console.print(f"[bold green]Summary saved to:[/bold green] {output_path}")
