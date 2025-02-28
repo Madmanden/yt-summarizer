@@ -208,7 +208,7 @@ def sanitize_filename(title):
     # Limit length and trim spaces
     return safe_title[:100].strip()
 
-def save_summary(summary, video_info, video_id, output_dir=None, print_to_terminal=False):
+def save_summary(summary, video_info, video_id, output_dir=None, print_to_terminal=False, model=None):
     """Save the summary as a markdown file and print it to the terminal if requested"""
     # Create output directory if specified
     if output_dir:
@@ -224,13 +224,18 @@ def save_summary(summary, video_info, video_id, output_dir=None, print_to_termin
     filename = f"{sanitize_filename(video_info['title'])}-{video_id}_{timestamp}.md"
     file_path = base_path / filename
     
+    # Format model name for display (remove provider prefix if present)
+    display_model = model.split('/')[-1] if model and '/' in model else model
+    
     with open(file_path, 'w', encoding='utf-8') as f:
         # Add metadata at the top of the file
         f.write(f"# {video_info['title']}\n\n")
         f.write(f"**Channel:** {video_info['author']}\n")
         f.write(f"**Video ID:** {video_id}\n")
-        f.write(f"**URL:** https://www.youtube.com/watch?v={video_id}\n\n")
-        f.write("---\n\n")
+        f.write(f"**URL:** https://www.youtube.com/watch?v={video_id}\n")
+        if display_model:
+            f.write(f"**Model:** {display_model}\n")
+        f.write("\n---\n\n")
         f.write(summary)
     
     # Print the summary to the terminal in a pretty way if requested
@@ -240,6 +245,8 @@ def save_summary(summary, video_info, video_id, output_dir=None, print_to_termin
         console.print(f"[cyan]Channel:[/cyan] {video_info['author']}")
         console.print(f"[cyan]Video ID:[/cyan] {video_id}")
         console.print(f"[cyan]URL:[/cyan] https://www.youtube.com/watch?v={video_id}")
+        if display_model:
+            console.print(f"[cyan]Model:[/cyan] {display_model}")
         console.print("\n[cyan]---[/cyan]\n")
         
         # Use Rich's Markdown rendering to display the summary with formatting

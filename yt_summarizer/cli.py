@@ -89,7 +89,7 @@ def main():
             
             # Step 4: Save summary
             task = progress.add_task("[cyan]Saving summary...", total=None)
-            output_path = save_summary(summary, video_info, video_id, output_dir, args.print)
+            output_path = save_summary(summary, video_info, video_id, output_dir, args.print, model)
             progress.update(task, completed=True)
         
         console.print(f"[bold green]Summary saved to:[/bold green] {output_path}")
