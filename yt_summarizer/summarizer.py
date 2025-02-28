@@ -9,6 +9,7 @@ from pathlib import Path
 from datetime import datetime
 from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, TranscriptsDisabled, VideoUnavailable
 from rich.console import Console
+from rich.markdown import Markdown
 
 # Initialize Rich console for prettier output
 console = Console()
@@ -209,7 +210,7 @@ def sanitize_filename(title):
     return safe_title[:100].strip()
 
 def save_summary(summary, video_info, video_id, output_dir=None):
-    """Save the summary as a markdown file"""
+    """Save the summary as a markdown file and print it to the terminal"""
     # Create output directory if specified
     if output_dir:
         Path(output_dir).mkdir(parents=True, exist_ok=True)
@@ -232,5 +233,19 @@ def save_summary(summary, video_info, video_id, output_dir=None):
         f.write(f"**URL:** https://www.youtube.com/watch?v={video_id}\n\n")
         f.write("---\n\n")
         f.write(summary)
+    
+    # Print the summary to the terminal in a pretty way
+    console.print("\n[bold green]Summary Generated:[/bold green]")
+    console.print(f"[bold cyan]# {video_info['title']}[/bold cyan]")
+    console.print(f"[cyan]Channel:[/cyan] {video_info['author']}")
+    console.print(f"[cyan]Video ID:[/cyan] {video_id}")
+    console.print(f"[cyan]URL:[/cyan] https://www.youtube.com/watch?v={video_id}")
+    console.print("\n[cyan]---[/cyan]\n")
+    
+    # Use Rich's Markdown rendering to display the summary with formatting
+    md = Markdown(summary)
+    console.print(md)
+    
+    console.print(f"\n[green]Summary saved to:[/green] {file_path}\n")
     
     return file_path
