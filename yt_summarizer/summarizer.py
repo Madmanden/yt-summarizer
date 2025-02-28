@@ -181,7 +181,6 @@ SUMMARY:
     }
     
     try:
-        console.print("[cyan]Running second pass to fix product names...[/cyan]")
         response = requests.post(
             "https://openrouter.ai/api/v1/chat/completions",
             headers=headers,
